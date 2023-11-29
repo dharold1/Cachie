@@ -1,0 +1,10 @@
+GET http://localhost:5000/analyse/?analysis_token=the quick,the
+
+# POST http://localhost:5000/search
+# content-type: application/json
+
+# {"search_query": "The quick brown fox jumps over the lazy do"}
+
+
+
+
