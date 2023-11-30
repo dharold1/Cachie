@@ -3,4 +3,4 @@ import { analyse } from "../controllers/analysisController";
 
 export const analysisRoutes = Router();
 
-analysisRoutes.get("/analyse", analyse);
+analysisRoutes.get("", analyse);

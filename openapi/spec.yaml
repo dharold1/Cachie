@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  title: Cachie API
+  version: 1.0.0
+paths:
+  /search:
+    post:
+      summary: Perform a search query.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+      responses:
+        "201":
+          description: OK
+  /analyse:
+    get:
+      summary: Analyse search queries.
+      parameters:
+        - name: analysis_token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyseResponse"
+components:
+  schemas:
+    SearchRequest:
+      type: object
+      properties:
+        search_query:
+          type: string
+    AnalyseResponse:
+      type: object
+      properties:
+        results:
+          type: object
+          additionalProperties:
+            type: integer
+          description: Results of the analysis.
+        time:
+          type: string
+          description: Time taken for analysis.

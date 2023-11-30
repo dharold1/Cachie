@@ -15,9 +15,9 @@ export const analyse = (req: Request, res: Response) => {
     arrayOfWords.forEach((word) => {
       wordOccurrences[word] = countWordOccurrences(word, words);
     });
-    res.status(200).json({ result: wordOccurrences });
+    res.status(200).json({ results: wordOccurrences });
   } else {
-    return res.status(400).json({ error: "Analysis token is required" });
+    return res.status(400).send({ error: "Analysis token is required" });
   }
 
   // const end_time = new Date().getTime();

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { search } from "../controllers/searchController";
 
-export const searchRoute = Router();
+export const searchRoutes = Router();
 
-searchRoute.post("/search", search);
+searchRoutes.post("", search);
