@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { words } from "./searchController";
-const start_time = new Date().getTime();
+import { performance } from "perf_hooks";
 
 type WordObject = { [key: string]: number };
 export const analyse = (req: Request, res: Response) => {
+  const start = performance.now();
   const { analysis_token } = req.query;
   const wordOccurrences: WordObject = {};
   if (analysis_token) {
@@ -15,16 +16,15 @@ export const analyse = (req: Request, res: Response) => {
     arrayOfWords.forEach((word) => {
       wordOccurrences[word] = countWordOccurrences(word, words);
     });
-    res.status(200).json({ results: wordOccurrences });
+    const end = performance.now();
+    const duration = end - start;
+
+    res
+      .status(200)
+      .json({ results: wordOccurrences, time: `${duration.toFixed(1)}ms` });
   } else {
     return res.status(400).send({ error: "Analysis token is required" });
   }
-
-  // const end_time = new Date().getTime();
-
-  // const duration = end_time - start_time;
-
-  // console.log(duration, end_time, start_time);
 };
 
 function countWordOccurrences(word: string, arrayOfStrings: string[]) {

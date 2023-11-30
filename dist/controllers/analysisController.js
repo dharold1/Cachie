@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.analyse = void 0;
 const searchController_1 = require("./searchController");
-const start_time = new Date().getTime();
+const perf_hooks_1 = require("perf_hooks");
 const analyse = (req, res) => {
+    const start = perf_hooks_1.performance.now();
     const { analysis_token } = req.query;
     const wordOccurrences = {};
     if (analysis_token) {
@@ -14,14 +15,15 @@ const analyse = (req, res) => {
         arrayOfWords.forEach((word) => {
             wordOccurrences[word] = countWordOccurrences(word, searchController_1.words);
         });
-        res.status(200).json({ results: wordOccurrences });
+        const end = perf_hooks_1.performance.now();
+        const duration = end - start;
+        res
+            .status(200)
+            .json({ results: wordOccurrences, time: `${duration.toFixed(1)}ms` });
     }
     else {
         return res.status(400).send({ error: "Analysis token is required" });
     }
-    // const end_time = new Date().getTime();
-    // const duration = end_time - start_time;
-    // console.log(duration, end_time, start_time);
 };
 exports.analyse = analyse;
 function countWordOccurrences(word, arrayOfStrings) {
