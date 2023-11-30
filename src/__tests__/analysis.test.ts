@@ -27,7 +27,7 @@ describe("analyse", () => {
       expect(statusCode).toBe(200);
       expect(body).toEqual({
         results: { "the quick": 1, "lazy dog": 1, the: 2 },
-        time: expect.any(String),
+        time: expect.any(String), 
       });
     });
   });
